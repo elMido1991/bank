@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head>
+<meta charset="utf-8"/>
+<title>Clients</title>
+<link rel="stylesheet" type="text/css" href="../static/css/bootstrap.min.css" th:href="@{css/bootstrap.min.css}" > 
+<link rel="stylesheet" type="text/css" href="../static/css/myStyle.css" th:href="@{css/myStyle.css}" > 
+</head>
+<body>
+<div th:replace="layout :: header"></div>
+
+<div class="col-md-auto">
+<div class="col-md-auto"><h2>Liste des clients</h2></div>
+<div class="col-md-auto">
+	<div class="row">
+		<div class="col">
+			<form th:action="@{clients}" method="get">
+				<label for="mc">Rechercher client : </label>
+				<input id="mc" type="text" name="mc" th:value="${mc}">
+				<button class="btn btn-primary">Chercher</button>
+			</form>
+			
+		</div>
+		<div class="col">
+			<form th:action="@{addCompte}" method="get">
+				<button class="btn btn-primary">Ajouter client</button>
+			</form>
+		</div>
+	</div>
+</div>
+<br>
+<div class="col-md-auto">
+		<table class="table table-hover">
+			<thead class="thead-light">
+				<tr><th >Id</th><th >Nom</th><th >Prénom</th><th></th><th></th></tr>
+			</thead>
+			<tbody>
+				<tr th:each="c:${listClients}">
+					<td th:text="${c.id}"></td>
+					<td th:text="${c.nom}"></td>
+					<td th:text="${c.prenom}"></td>
+					<td><a  th:href="@{editClient(id=${c.id})}">Edit</a></td>
+					<td><a  onclick="return confirm('Êtes vous sûr de vouloir supprimer ?')" th:href="@{deleteUser(id=${c.id},mc=${mc},page=${pageCourante})}">Delete</a></td>
+				</tr>
+			</tbody>
+		</table>
+</div>
+<div class="col-md-auto">
+	<ul class="pagination">
+		<li th:class="${pageCourante}==${status.index}?'page-item active':'page-item'" th:each="p,status:${pages}">
+			<a class="page-link" th:href="@{clients(page=${status.index},mc=${mc})}" th:text="${status.index}" ></a>
+		</li>
+	</ul>
+</div>
+</div>
+<div th:replace="layout :: footer">
+</div>
+</body>
+</html>

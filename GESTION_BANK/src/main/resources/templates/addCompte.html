@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head>
+<meta charset="utf-8"/>
+<title>Ajout d'un compte</title>
+<link rel="stylesheet" type="text/css" href="../static/css/bootstrap.min.css" th:href="@{css/bootstrap.min.css}" > 
+<link rel="stylesheet" type="text/css" href="../static/css/myStyle.css" th:href="@{css/myStyle.css}" > 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+<div th:replace="layout :: header"></div>
+	<div class="container">
+		<div class="card">
+			<div class="card-header">Saisie d'un nouveau compte</div>
+			<div class="card-body">
+			<form method="post" th:action="@{saveCompte}" >
+			
+				<div class="form-group" >
+					<div class="form-group">
+						<label class="control-label">Nom du client:</label>
+						<input class="form-control" type="text" name="nom" th:value="${client.nom}">
+						<span class="alert-error text-danger" th:errors="${client.nom}"></span>
+					</div>
+					<div class="form-group">
+						<label class="control-label">Prénom du client:</label>
+						<input class="form-control" type="text" name="prenom" th:value="${client.prenom}"/>
+						<span class="alert-error text-danger" th:errors="${client.prenom}"></span>
+					</div>
+				</div>
+			
+			
+				<div class="form-group">
+					<label class="control-label">Numéro de compte :</label>
+					<input class="form-control" type="text" name="codeCompte" th:value="${compte.codeCompte}" >
+					<span class="alert-error text-danger" th:errors="${compte.codeCompte}"></span>
+				</div>
+				
+				<div class="form-group">
+					<label class="control-label">Solde :</label>
+					<input class="form-control" type="number" name="solde" th:value="${compte.solde}">
+					<span class="alert-error text-danger" th:errors="${compte.solde}"></span>
+				</div>
+				
+				<div class="form-group">
+					<label class="control-label">Date création :</label>
+					<input th:type="date" class="form-control input-sm datepicker" name="dateCreation" th:field="*{compte.dateCreation}" placeholder="Date Of Birth"/>
+					<span class="alert-error text-danger" th:errors="${compte.dateCreation}"></span>
+				</div>
+				
+				
+				
+				<div class="form-group" >
+							<label for="typecompte" class="control-label">Type de compte :</label><br>
+		            		<select id="typecompte"  name="dtype" class="form-control" >
+                				<option value="courant" th:value="'courant'" th:text="Courant" />
+                				<option value="epargne" th:value="'epargne'" th:text="Epargne" selected="selected" />
+            				</select>
+				</div>
+				
+				
+				
+				<div class="form-group" id="courant"  style="display: none" >
+					<label class="control-label">Facilité :</label>
+					<input class="form-control" type="text"  name="facilite" >
+					<span class="alert-error text-danger" ></span>
+				</div>
+				
+				<div class="form-group"  id=epargne >
+					<label class="control-label">Taux :</label>
+					<input class="form-control" type="text" name="taux" >
+					<span class="alert-error text-danger" ></span>
+				</div>
+				
+				<div  class="form-group">
+					<span class="alert-error text-danger" th:if="${error}" th:text="${error}"></span>
+				</div>
+				
+				<div class="btn-group">
+					<button class="btn btn-primary">Ajouter</button>
+					
+				</div>
+				
+				
+			</form>
+			</div>
+			
+		</div>
+	</div>
+<div th:replace="layout :: footer"></div>
+
+	
+<script>
+$("#typecompte").change(function(){
+	if($("#typecompte").val()=="courant")
+		  {$("#courant").show();$("#epargne").hide();} 
+	else
+			{$("#courant").hide();$("#epargne").show();};
+});
+$('.datepicker').pickadate({
+    autoclose: true,
+    format: 'yyyy-MM-dd',
+    formatSubmit: 'yyyy-mm-dd'
+  });
+				        
+</script>
+
+
+
+</body>
+</html>

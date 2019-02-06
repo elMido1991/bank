@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head>
+<meta charset="utf-8"/>
+<title>Ajout d'un client</title>
+<link rel="stylesheet" type="text/css" href="../static/css/bootstrap.min.css" th:href="@{css/bootstrap.min.css}" > 
+<link rel="stylesheet" type="text/css" href="../static/css/myStyle.css" th:href="@{css/myStyle.css}" > 
+</head>
+<body>
+<div th:replace="layout :: header"></div>
+	<div class="container">
+		<div class="card">
+			<div class="card-header">Saisie d'un nouveau client</div>
+			<div class="card-body">
+			<form method="post" th:action="@{saveClient}">
+				<div class="form-group">
+					<label class="control-label">Nom du client:</label>
+					<input class="form-control" type="text" name="nom" th:value="${client.nom}">
+					<span class="alert-error text-danger" th:errors="${client.nom}"></span>
+				</div>
+				<div class="form-group">
+					<label class="control-label">Prénom du client:</label>
+					<input class="form-control" type="text" name="prenom" th:value="${client.prenom}"/>
+					<span class="alert-error text-danger" th:errors="${client.prenom}"></span>
+				</div>
+				<div class="btn-group">
+					<button class="btn btn-primary">Ajouter</button>
+				</div>
+			</form>
+				
+			</div>
+		</div>
+	</div>
+<div th:replace="layout :: footer"></div>	
+</body>
+</html>

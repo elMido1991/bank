@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head>
+<meta charset="utf-8"/>
+<title>Ajout d'un compte</title>
+<link rel="stylesheet" type="text/css" href="../static/css/bootstrap.min.css" th:href="@{css/bootstrap.min.css}" > 
+<link rel="stylesheet" type="text/css" href="../static/css/myStyle.css" th:href="@{css/myStyle.css}" > 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+<div th:replace="layout :: header"></div>
+	<div class="container">
+		<div class="card">
+			<div class="card-header">Saisie d'un nouveau compte</div>
+			<div class="card-body">
+			<form method="get" th:action="@{comptes}" >
+			
+				<div class="form-group" >
+					<label for="choix_client">Client :</label>
+					<input class="form-control" type="text" disabled="disabled" th:value="${compte.client}">
+				</div>
+			
+				<div class="form-group">
+					<label class="control-label">Numéro de compte :</label>
+					<input class="form-control" type="text" disabled="disabled" th:value="${compte.codeCompte}">
+				</div>
+				
+				<div class="form-group">
+					<label class="control-label">Solde :</label>
+					<input class="form-control" type="text" disabled="disabled" th:value="${compte.solde}">
+				</div>
+				
+				<div class="form-group">
+					<label class="control-label">Date création :</label>
+					<input class="form-control" type="text" disabled="disabled" th:value="${compte.dateCreation}">
+				</div>
+				
+				<div class="form-group" >
+						<label for="typecompte" class="control-label">Type de compte :</label>
+						<input class="form-control" type="text" disabled="disabled" th:value="${compte.class.simpleName}">
+				</div>
+				
+				
+				<div class="form-group" th:if="${compte.class.simpleName}=='CompteCourant'" >
+						<label for="typecompte" class="control-label">Facilité :</label>
+						<input class="form-control" type="text" disabled="disabled" th:value="${compte.facilite}">
+				</div>
+				
+				
+				<div class="form-group" th:if="${compte.class.simpleName}=='CompteEpargne'">
+						<label for="typecompte" class="control-label">Taux :</label>
+						<input class="form-control" type="text" disabled="disabled" th:value="${compte.taux}">
+				</div>
+				
+				
+				
+				
+				
+				
+				<div class="btn-group">
+					<button class="btn btn-primary">Valider</button>
+				</div>
+			</form>
+			</div>
+			
+		</div>
+	</div>
+<div th:replace="layout :: footer"></div>
+
+	
+<script>
+$("#typecompte").change(function(){
+	if($("#typecompte").val()=="courant")
+		  {$("#courant").show();$("#epargne").hide();} 
+	else
+			{$("#courant").hide();$("#epargne").show();};
+});
+				        
+</script>
+
+
+
+</body>
+</html>

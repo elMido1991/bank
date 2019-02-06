@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head>
+<meta charset="utf-8"/>
+<title>Nouvelle opération</title>
+<link rel="stylesheet" type="text/css" href="../static/css/bootstrap.min.css" th:href="@{css/bootstrap.min.css}" > 
+<link rel="stylesheet" type="text/css" href="../static/css/myStyle.css" th:href="@{css/myStyle.css}" > 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+<div th:replace="layout :: header"></div>
+	<div class="container">
+		<div class="card">
+			<div class="card-header">Effectuation d'une nouvelle opération</div>
+			<div class="card-body">
+			<form method="post" th:action="@{doOperation(codeCompte=${compte.codeCompte})}">
+				<div class="form-group">
+					<label class="control-label">Client:</label>
+					<input class="form-control" disabled="disabled" type="text" name="client" th:value="${compte.client.nom+' '+compte.client.prenom}">
+				</div>
+			
+				<div class="form-group">
+					<label class="control-label">Numero de compte:</label>
+					<input class="form-control" disabled="disabled" type="text" name="codeCompte" th:value="${compte.codeCompte}">
+				</div>
+				
+				<div class="form-group">
+					<label class="control-label">Solde:</label>
+					<input class="form-control" disabled="disabled" type="text" name="solde" th:value="${compte.solde}">
+				</div>
+				
+				<div class="form-group">
+					<label class="control-label">Type d'opération:</label>
+					<select id="typeOperation"  name="typeOperation" class="form-control" >
+                				<option th:value="Versement" th:text="Versement"  />
+                				<option th:value="Virement"  th:text="Virement"  selected="selected"/>
+                				<option th:value="Retrait"   th:text="Retrait" />
+            		</select>
+				</div>
+				
+				<div class="form-group">
+					<label class="control-label">Montant:</label>
+					<input class="form-control"  type="text" name="montant">
+				</div>
+				
+				<div id="virementDiv" class="form-group">
+					<label class="control-label">Numéro de l'autre compte:</label>
+					<input class="form-control"  type="text" name="compteVirement" >
+				</div>
+				
+				<div  class="form-group">
+					<span class="alert-error text-danger" th:text="${#httpServletRequest.getParameter('error')}"></span>
+				</div>
+	 			
+				<div class="btn-group">
+					<button class="btn btn-primary">Effectuer opération</button>
+				</div>
+			</form>
+				
+			</div>
+		</div>
+	</div>
+<div th:replace="layout :: footer"></div>
+<script>
+$("#typeOperation").change(function(){
+	if($("#typeOperation").val()=="Virement")
+		  $("#virementDiv").show();
+	else
+		  $("#virementDiv").hide();
+});
+
+$("#typeOperation").ready(function(){
+	if($("#typeOperation").val()=="Virement")
+		  $("#virementDiv").show();
+	else
+		  $("#virementDiv").hide();
+});
+
+				        
+</script>	
+</body>
+</html>

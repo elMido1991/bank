@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head>
+<meta charset="utf-8"/>
+<title>Opérations</title>
+<link rel="stylesheet" type="text/css" href="../static/css/bootstrap.min.css" th:href="@{css/bootstrap.min.css}" > 
+<link rel="stylesheet" type="text/css" href="../static/css/myStyle.css" th:href="@{css/myStyle.css}" > 
+</head>
+<body>
+<div th:replace="layout :: header"></div>
+
+<div class="col-md-auto">
+<div class="col-md-auto"><h2>Liste des opérations</h2></div>
+<div class="col-md-auto">
+	<div class="row">
+		<div class="col">
+			<form th:action="@{operations}" method="get">
+				<label>Rechercher compte : </label>
+				<input class="form-control" type="text" name="mc" style="width:500px" th:value="${mc}">
+				<button class="btn btn-primary">Chercher</button>
+			</form>
+		</div>
+	</div>
+</div>
+<br>
+<div class="col-md-auto">
+		<table class="table table-hover">
+			<thead class="thead-light">
+				<tr>
+					<th>Montant</th>
+					<th>Date</th>
+					<th>Type Opération</th>
+					<th>Compte Client</th>
+					<th>Client</th>
+					<th>Compte Bénficiaire</th>
+					<th>Bénficiaire</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="o:${listOperations}">
+					<td th:text="${o.montant}"></td>
+					<td th:text="${o.dateOperation}"></td>
+					<td th:text="${o.class.simpleName}"></td>
+					<td th:text="${o.compte.codeCompte}"></td>
+					<td th:text="${o.compte.client}"></td>
+					<td th:if="${o.class.simpleName}=='Virement'" th:text="${o.compteVirement.codeCompte}"></td>
+					<td th:if="${o.class.simpleName}!='Virement'" th:text="${'-'}"></td>
+					<td th:if="${o.class.simpleName}=='Virement'" th:text="${o.compteVirement.client}"></td>
+					<td th:if="${o.class.simpleName}!='Virement'" th:text="${'-'}"></td>
+				</tr>
+			</tbody>
+		</table>
+</div>
+<div class="col-md-auto">
+	<ul class="pagination">
+		<li th:class="${pageCourante}==${status.index}?'page-item active':'page-item'" th:each="p,status:${pages}">
+			<a class="page-link" th:href="@{operations(page=${status.index},mc=${mc})}" th:text="${status.index}" ></a>
+		</li>
+	</ul>
+</div>
+</div>
+<div th:replace="layout :: footer">
+</div>
+</body>
+</html>

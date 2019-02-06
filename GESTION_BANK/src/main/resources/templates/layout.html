@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"  >
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" href="../static/css/bootstrap.min.css" th:href="@{css/bootstrap.min.css}" > 
+<link rel="stylesheet" type="text/css" href="../static/css/myStyle.css" th:href="@{css/myStyle.css}" > 
+<title>BANK MOBILE</title>
+</head>
+<body>
+<header th:fragment="header" >
+	
+	<div class="navbar navbar-expand-sm bg-primary navbar-light">
+	
+			<ul class="navbar-nav">
+				<li class="nav-item active"><a class="nav-link" th:href="@{clients}">Clients</a></li>
+				<li class="nav-item active"><a class="nav-link" th:href="@{comptes}">Comptes</a></li>
+				<li class="nav-item active"><a class="nav-link" th:href="@{operations}">Opérations</a></li>
+			</ul>
+	</div>
+	<br>
+</header>
+
+<section >
+</section>
+
+<footer th:fragment="footer">
+ 
+</footer>
+
+</body>
+</html>
