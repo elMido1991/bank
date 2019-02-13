@@ -5,22 +5,17 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,7 +26,6 @@ import com.bank.pojos.Compte;
 import com.bank.pojos.CompteCourant;
 import com.bank.pojos.CompteEpargne;
 import com.bank.pojos.Operation;
-import com.bank.pojos.Versement;
 
 
 @Controller
@@ -40,9 +34,28 @@ public class AppController {
 	@Autowired
 	private IBanqueMetier iBanqueMetier;
 	
+	
+
+
+	
+	
+	@RequestMapping(value="/login",method=RequestMethod.GET)
+	public String login(Model model){
+		
+		return "login";
+	}
+	
+	@RequestMapping(value="/logout",method=RequestMethod.GET)
+	public String logout(Model model){
+		
+		return "login";
+	}
+	
+	
 	//client managment
 	
 	
+	@Secured(value= {"ROLE_admin","ROLE_manager","ROLE_user"})
 	@RequestMapping(value="/clients",method=RequestMethod.GET)
 	public String clients(Model model,
 			@RequestParam(name="page",defaultValue="0") int p,
@@ -58,6 +71,8 @@ public class AppController {
 		return "clients";
 	}
 	
+	
+	@Secured(value= {"ROLE_admin","ROLE_manager"})
 	@RequestMapping(value="/deleteUser",method=RequestMethod.GET)
 	public String deleteUser(Model model,
 			@RequestParam(name="id") String id,
@@ -67,12 +82,14 @@ public class AppController {
 		return "redirect:/clients?page="+p+"&mc="+mc;
 	}
 	
+	@Secured(value= {"ROLE_admin","ROLE_manager"})
 	@RequestMapping(value="/saveClient",method=RequestMethod.GET)
 	public String clientForm(Model model) {
 		model.addAttribute("client", new Client());
 		return "addClient";
 	}
 	
+	@Secured(value= {"ROLE_admin","ROLE_manager"})
 	@RequestMapping(value="/saveClient",method=RequestMethod.POST)
 	public String saveClient(Model model,@Valid Client client,BindingResult bindingResult) {
 		if(bindingResult.hasErrors()) {
@@ -82,6 +99,7 @@ public class AppController {
 		return "confirmationClient";
 	}
 	
+	@Secured(value= {"ROLE_admin","ROLE_manager"})
 	@RequestMapping(value="/editClient",method=RequestMethod.GET)
 	public String editClient(Model model,@RequestParam(name="id") String id) {
 		Client client = iBanqueMetier.consulterClient(id);
@@ -89,6 +107,8 @@ public class AppController {
 		return "editClient";
 	}
 	
+	
+	@Secured(value= {"ROLE_admin","ROLE_manager"})
 	@RequestMapping(value="/editClient",method=RequestMethod.POST)
 	public String editClient(Model model,@RequestParam(name="id") String id,@Valid Client client,BindingResult bindingResult) {
 		if(bindingResult.hasErrors()) {
@@ -111,6 +131,7 @@ public class AppController {
 	
 		
 	//comptes managment
+	@Secured(value= {"ROLE_admin","ROLE_manager","ROLE_user"})
 	@RequestMapping(value="/comptes",method=RequestMethod.GET)
 	public String comptes(Model model,
 			@RequestParam(name="page",defaultValue="0") int p,
@@ -126,6 +147,7 @@ public class AppController {
 		return "comptesClients";
 	}
 	
+	@Secured(value= {"ROLE_admin","ROLE_manager"})
 	@RequestMapping(value="/addCompte",method=RequestMethod.GET)
 	public String addCompte(Model model) {
 		
@@ -145,7 +167,7 @@ public class AppController {
 	}
 	
 
-	
+	@Secured(value= {"ROLE_admin","ROLE_manager"})
 	@RequestMapping(value="/saveCompte",method=RequestMethod.POST)
 	public String saveCompte(Model model,
 			@RequestParam(name="dtype") String dtype,
@@ -193,6 +215,7 @@ public class AppController {
 		
 	}
 
+	@Secured(value= {"ROLE_admin","ROLE_manager"})
 	@RequestMapping(value = "/doOperation", method = RequestMethod.GET)
 	public String doOperation(Model model, @RequestParam(name = "codeCompte") String codeCompte) {
 		try {
@@ -208,6 +231,7 @@ public class AppController {
 		}
 	}
 	
+	@Secured(value= {"ROLE_admin","ROLE_manager"})
 	@RequestMapping(value="/doOperation",method=RequestMethod.POST)
 	public String doOperation(Model model,
 			@RequestParam(name="codeCompte") String codeCompte,
@@ -249,6 +273,7 @@ public class AppController {
 		
 	}
 	
+	@Secured(value= {"ROLE_admin","ROLE_manager","ROLE_user"})
 	@RequestMapping(value="/operations",method=RequestMethod.GET)
 	public String operations(Model model,
 			@RequestParam(name="page",defaultValue="0") int p,

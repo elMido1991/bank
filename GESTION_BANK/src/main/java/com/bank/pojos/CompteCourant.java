@@ -16,6 +16,10 @@ public class CompteCourant extends Compte implements Serializable {
 	/**
 	 * 
 	 */
+	private static final long serialVersionUID = 1L;
+	/**
+	 * 
+	 */
 	@Column(name="Facilite", nullable=true, length=10)
 	private double facilite;
 	

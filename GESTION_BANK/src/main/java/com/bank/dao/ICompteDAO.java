@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import com.bank.pojos.Client;
 import com.bank.pojos.Compte;
 
 public interface ICompteDAO extends JpaRepository<Compte, String> {

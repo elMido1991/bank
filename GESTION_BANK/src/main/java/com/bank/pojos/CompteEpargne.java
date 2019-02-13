@@ -17,6 +17,10 @@ public class CompteEpargne extends Compte implements Serializable {
 	/**
 	 * 
 	 */
+	private static final long serialVersionUID = 1L;
+	/**
+	 * 
+	 */
 	@Column(name="Taux", nullable=true, length=10)	
 	private double taux;
 

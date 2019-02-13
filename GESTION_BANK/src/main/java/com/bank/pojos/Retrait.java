@@ -13,6 +13,11 @@ import javax.persistence.InheritanceType;
 @DiscriminatorValue(value="retrait")
 public class Retrait extends Operation implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public Retrait(double montant, Date dateOperation) {
 		super(montant, dateOperation);
 		// TODO Auto-generated constructor stub

@@ -16,6 +16,10 @@ import javax.persistence.OneToOne;
 @DiscriminatorValue(value="virement")
 public class Virement extends Operation implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@OneToOne(targetEntity=Compte.class, fetch=FetchType.LAZY)
 	@JoinColumn(name="CodeCompteVirement", referencedColumnName="CodeCompte", nullable=true,columnDefinition="varchar(24)")
 	private Compte compteVirement;
