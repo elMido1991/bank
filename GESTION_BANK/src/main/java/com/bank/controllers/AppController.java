@@ -45,11 +45,7 @@ public class AppController {
 		return "login";
 	}
 	
-	@RequestMapping(value="/logout",method=RequestMethod.GET)
-	public String logout(Model model){
-		
-		return "login";
-	}
+	
 	
 	
 	//client managment
