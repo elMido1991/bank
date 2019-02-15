@@ -35,12 +35,6 @@ public class AppController {
 	private IBanqueMetier iBanqueMetier;
 	
 	
-	@Secured(value= {"ROLE_admin","ROLE_manager","ROLE_user"})
-	@RequestMapping(value="/index",method=RequestMethod.GET)
-	public String index(Model model){
-		
-		return "signup";
-	}
 	
 	
 	@RequestMapping(value="/login",method=RequestMethod.GET)
